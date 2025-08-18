@@ -32,7 +32,7 @@ jobs:
       - name: Lint and check score
         run: |
           PYTHONPATH=. pylint src/ api.py api_client.py > pylint_result.txt || true
-          score=$(tail -1 pylint_result.txt | grep -Eo "at [0-9.]+/10" | grep -Eo "[0-9.]+" | tail -1)
+          score=$(grep -Eo "at [0-9.]+/10" pylint_result.txt | grep -Eo "[0-9.]+" | tail -1)
           echo "Pylint score: $score"
           if [ -z "$score" ]; then
             echo "No Pylint score detected! Failing build."
