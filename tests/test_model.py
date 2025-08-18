@@ -15,5 +15,8 @@ def test_model_load_and_infer():
     arr_flat_scaled = scaler.transform(arr_flat)
     arr_scaled = arr_flat_scaled.reshape(1, 30, 13)
     y_pred = model.predict(arr_scaled)
+
+    # make sure it's always a float scalar, not a 2D array
+    y_pred_value = float(np.array(y_pred).ravel()[0])
     assert y_pred.shape == (1, 1)
-    assert np.isfinite(y_pred).all()
+    assert np.isfinite(y_pred_value).all()

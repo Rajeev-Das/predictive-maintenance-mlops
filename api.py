@@ -67,10 +67,34 @@ def preprocess_sequence(seq_dicts):
 
 
 # Load model and scaler once at startup
-model = load_model(MODEL_PATH)
-scaler = joblib.load(SCALER_PATH)
+_cache = {"model": None, "scaler": None}
+
+
+def get_model_and_scaler():
+    """
+    Loads and returns the scaler and model objects for RUL prediction.
+
+    This function caches the loaded model and scaler to avoid reloading them on every request.
+    If the model or scaler is not already loaded, it loads them from disk using the specified
+    MODEL_PATH and SCALER_PATH. If the files are not found, it raises a FileNotFoundError.
+
+    Returns:
+        tuple: (scaler, model) where scaler is the fitted scaler object and model is the trained LSTM model.
+
+    Raises:
+        FileNotFoundError: If the model or scaler files are not found at the specified paths.
+    """
+    if _cache["model"] is None or _cache["scaler"] is None:
+        if os.path.exists(MODEL_PATH) and os.path.exists(SCALER_PATH):
+            _cache["scaler"] = joblib.load(SCALER_PATH)
+            _cache["model"] = load_model(MODEL_PATH)
+        else:
+            raise FileNotFoundError("Model/Scaler not found")
+    return _cache["scaler"], _cache["model"]
+
 
 app = FastAPI(title="Predictive Maintenance RUL Inference API")
+
 
 @app.get("/")
 def read_root():
@@ -95,6 +119,10 @@ def predict_rul_rnn(data: RULSequence):
         dict: A dictionary containing the predicted RUL value under the key 'predicted_RUL', 
             or an error message under the key 'error' if an exception occurs.
     """
+    try:
+        scaler, model = get_model_and_scaler()
+    except FileNotFoundError:
+        return {"error": "Model files not available"}
     try:
         arr = preprocess_sequence(data.sequence)
         nsamples, nsteps, nfeatures = arr.shape
