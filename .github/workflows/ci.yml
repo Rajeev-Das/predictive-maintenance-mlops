@@ -48,6 +48,8 @@ jobs:
           cat pylint_result.txt
 
       - name: Unit and integration tests (pytest)
+        env:
+          CI: true
         run: |
           pip install pytest
           PYTHONPATH=. pytest --maxfail=3 --disable-warnings -q
