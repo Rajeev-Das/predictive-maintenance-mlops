@@ -50,7 +50,7 @@ jobs:
       - name: Unit and integration tests (pytest)
         run: |
           pip install pytest
-          pytest
+          PYTHONPATH=. pytest --maxfail=3 --disable-warnings -q
 
   docker-build:
     runs-on: ubuntu-latest
