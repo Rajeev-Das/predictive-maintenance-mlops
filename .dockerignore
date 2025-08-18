@@ -1,0 +1,31 @@
+# Ignore Python cache/files
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter notebooks (leave these local)
+notebooks/
+*.ipynb
+
+# Test output, local data, or other dev files
+*.log
+*.csv
+*.tsv
+*.out
+
+# Local data/model artifacts only needed during dev/eval
+data/
+tests/
+lstm_tuning/
+*.keras
+*.joblib
+
+# Virtualenvs
+venv/
+.env/
+.env
+.DS_Store
+
+# Misc system/junk
+*.swp
+*.bak

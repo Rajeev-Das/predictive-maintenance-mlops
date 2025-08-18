@@ -5,7 +5,10 @@ CMAPSSData/
 *.pyc
 __pycache__/
 .env
+*.json
+*.h5
 *.log
+*.keras
 
 # Do not ignore the README file
 !README.md

@@ -1,0 +1,48 @@
+[MASTER]
+# Python code to analyze
+ignore=tests
+
+[MESSAGES CONTROL]
+disable=
+    C0103,  # doesn't conform to snake_case naming style
+    C0301,  # line-too-long
+    R0903,  # too-few-public-methods (especially good for dataclasses)
+    R0913,  # too-many-arguments (common for ML/data functions)
+    R0914,  # too-many-locals (common in ML training code)
+    R0915,  # too-many-statements
+    R0801,  # duplicate-code (feature/sequence engineering is often duplicated in ML/DS)
+    W0611,  # unused-import (suppresses errors for some conditional/dev imports)
+    W0621,  # redefined-outer-name (for helpers often reused as 'df', 'x')
+    W0612,  # unused-variable (flexibility when prototyping)
+    E0401,  # import-error (if you have dynamic or conditional imports)
+    E0611,  # no-name-in-module (sometimes spurious for numpy/pandas/tensorflow)
+
+[REPORTS]
+output-format = colorized
+reports = no
+score = yes
+
+[BASIC]
+good-names = x, y, df, i, j, k, X, y_true, X_train, y_test, X_test, y_pred, f, n, m, s, t
+
+[FORMAT]
+max-line-length=120
+
+[TYPECHECK]
+generated-members=numpy.*,pandas.*
+
+[DESIGN]
+max-args=10
+max-locals=25
+
+[LOGGING]
+logging-modules=logging
+
+[SIMILARITIES]
+min-similarity-lines=4
+
+[VARIABLES]
+additional-builtins=
+
+[IMPORTS]
+known-standard-library=numpy,pandas

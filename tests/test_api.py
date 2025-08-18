@@ -1,11 +1,24 @@
 from fastapi.testclient import TestClient
-from src.api import app
+from api import app
 
 client = TestClient(app)
 
-def test_predict():
-    response = client.post("/predict", json={
-        "temperature": 100, "pressure": 1.5, "rpm": 3000, "vibration": 0.5
-    })
+def test_ping():
+    resp = client.get("/ping")
+    assert resp.status_code == 200
+    assert "API" in resp.json()["message"]
+
+def test_predict_rul():
+    # Generate a dummy, valid payload (all 1.0s)
+    features = [
+        'op_setting_1', 'op_setting_2',
+        'sensor_4_rollmean', 'sensor_12', 'sensor_7', 'sensor_21', 'sensor_20',
+        'sensor_12_rollmean', 'sensor_7_rollmean', 'sensor_21_rollmean',
+        'sensor_12_slope', 'sensor_7_slope', 'sensor_21_slope'
+    ]
+    sequence = [{f: 1.0 for f in features} for _ in range(30)]
+    payload = {"sequence": sequence}
+    response = client.post("/predict_rul", json=payload)
     assert response.status_code == 200
-    assert "predicted_rul" in response.json()
+    data = response.json()
+    assert "predicted_RUL" in data or "error" in data

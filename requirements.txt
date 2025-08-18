@@ -13,3 +13,6 @@ xgboost
 nbformat
 statsmodels
 tensorflow
+keras-tuner
+pylint
+black
