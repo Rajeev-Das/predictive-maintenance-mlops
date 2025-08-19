@@ -166,14 +166,13 @@ if __name__ == "__main__":
 
     # Default unit_id is 30 if not provided
     if len(sys.argv) > 1:
-        UNIT_ID = sys.argv[1]
         try:
-            unit_id = int(UNIT_ID)
+            unit_id = int(sys.argv[1])
         except ValueError:
-            print(f"Invalid unit_id '{UNIT_ID}', must be an integer.")
+            print(f"Invalid unit_id '{sys.argv[1]}', must be an integer.")
             sys.exit(1)
     else:
-        UNIT_ID = 30
+        unit_id = 30
 
-    payload = get_sample_payload(unit_id=UNIT_ID)
+    payload = get_sample_payload(unit_id=unit_id)
     call_api(payload)

@@ -1,5 +1,9 @@
 # Predictive Maintenance: Remaining Useful Life (RUL) Prediction with LSTM
 
+Build and deploy a containerized FastAPI microservice that predicts ship engine RUL with a MAE under 20 cycles on the NASA-CMAPSS benchmark, with automation scripts and CI/CD pipelines, demonstrating how such a model can enable condition-based maintenance and quantifiable cost savings for marine operators.
+
+NOTION DOC: https://www.notion.so/Predictive-RUL-Maintenance-API-254b75dc41ab8092910ff4aa2a270c5b
+
 ## predictive-maintenance-mlops
 
 A robust MLOps pipeline for predictive maintenance, focused on estimating the Remaining Useful Life (RUL) of marine engine components using time-series sensor data. The system leverages the NASA CMAPSS Turbofan Engine Degradation Simulation Dataset—adapted here to resemble sensor readings from ship engines—to train and serve deep learning models for real-time RUL prediction.
